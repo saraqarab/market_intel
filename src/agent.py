@@ -1,4 +1,3 @@
-from src.yfinance_adapter import YFinanceAdapter
 from ollama import ChatResponse
 from ollama import chat
 import subprocess
@@ -55,7 +54,7 @@ class Agent:
         meta_data['prompt_eval_duration'] = str(response.prompt_eval_duration)
         meta_data['eval_count'] = str(response.eval_count)
         meta_data['eval_duration'] = str(response.eval_duration)
-        with open(f"{time.time()}.json", "w") as json_file:
+        with open(f"data/metadata/{time.time()}.json", "w") as json_file:
             json.dump(meta_data, json_file, indent=4)
 
 
