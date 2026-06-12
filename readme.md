@@ -27,7 +27,7 @@ then :
 
 
 
-## My notes about what the code is going:
+## My notes about what the code is doing:
 
 1. pull data from yfinance for a ticker
 2. save it into csv
