@@ -27,5 +27,5 @@ class YFinanceAdapter:
         df["ticker"] = normalized_ticker
         result = df[["date", "ticker", "open", "high", "low", "close", "volume"]]
         self._cache[key] = result
-        # result = result.to_string()
+        result.to_excel(f'{ticker}.xlsx', index=False)
         return result.copy()
