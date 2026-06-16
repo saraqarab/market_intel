@@ -27,10 +27,3 @@ then :
 
 
 
-## My notes about what the code is doing:
-
-1. pull data from yfinance for a ticker
-2. save it into csv
-3. figure out a way to give csv to model - chroma db - no because it returns data by semantic similarity and our data is numeric so not sure it is the right choice
-4. [ways to get csv ingested by a model](https://astroa7m.medium.com/converting-csv-files-for-rag-systems-a-concise-guide-856af3d8999a)
-5. automate model installation checks
