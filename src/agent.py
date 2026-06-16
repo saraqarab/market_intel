@@ -22,13 +22,14 @@ class Agent:
     def call_ollama(self, question):
         role = 'user'
         extract_date = utils.extract_date(question)
-        if extract_date is False:
+        if extract_date:
             response = self.call_simple_response(role, question)
             self._save_agent_response(response, question)
-        else:
-            if utils.is_weekend(str(extract_date)):
-                response = f"The date you entered seems to falling on a weekend when markets are closed. Please enter a date that doesn't fall on a weekend"
+            return response.message.content
+        elif utils.is_weekend(str(extract_date)):
+                response = f"Please enter a date that doesn't fall on a weekend"
                 self._save_fallback_metadata(response, question)
+                return response
 
     def call_simple_response(self, role, question):
         response = chat(

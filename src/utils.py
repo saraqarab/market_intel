@@ -1,8 +1,8 @@
 import os
 from datetime import datetime
-import dateparser as dp
 from pathlib import Path
 from dateutil import parser
+from dateutil.parser import ParserError
 
 is_print = True
 
@@ -36,11 +36,11 @@ class Utils:
             return ''
 
     def extract_date(self, date_str):
-        dt = parser.parse(date_str, fuzzy=True)
-        if dt:
+        try :
+            dt = parser.parse(date_str, fuzzy=True)
             date = dt.strftime("%Y-%m-%d")
             return date
-        else:
+        except (ValueError, ParserError) :
             return False
 
 
