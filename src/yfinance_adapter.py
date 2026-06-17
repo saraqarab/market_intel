@@ -1,17 +1,15 @@
 import pandas as pd
 import yfinance as yf
 
-from src.utils import Utils
-
-utils = Utils
+from src.price_source import PriceSource
 
 
-class YFinanceAdapter:
+class YFinanceAdapter(PriceSource):
     def __init__(self):
         self._cache = {}
         # self.fall_back_response=""
 
-    def get_prices(self, ticker: str, start: str, end: str):
+    def get_prices(self, ticker: str, start: str, end: str) -> pd.DataFrame:
         normalized_ticker = ticker.upper()
         key = (normalized_ticker, start, end)
 
@@ -32,6 +30,5 @@ class YFinanceAdapter:
         df["ticker"] = normalized_ticker
         result = df[["date", "ticker", "open", "high", "low", "close", "volume"]]
         self._cache[key] = result
-        result.to_excel(f'data/{ticker}.xlsx', index=False)
-        return result.copy() # copy because df are mutable so if I do something like df['start']=0 it'll get corrupted
+        return result.copy()
 

@@ -19,52 +19,48 @@ class Utils:
     def store_data(df, file_name):
         data_dir = Path("data")
         data_dir.mkdir(parents=True, exist_ok=True)
-        output_file = data_dir / "2024.csv"
+        output_file = data_dir / file_name
         df.to_csv(output_file, index=False)
-        print(df)
+        return output_file
 
     @classmethod
     def is_weekend(cls, date_str):
-        if date_str:
-            date = datetime.strptime(date_str, "%Y-%m-%d")
-            cls.dprint(date.strftime("%Y-%m-%d"))
-            return date.weekday() >= 5
-        else :
-            return ''
+        if not date_str:
+            return False
+        date = datetime.strptime(str(date_str)[:10], "%Y-%m-%d")
+        cls.dprint(date.strftime("%Y-%m-%d"))
+        return date.weekday() >= 5
 
     @staticmethod
-    def extract_date(date_str):
-
+    def extract_date(question):
         today = datetime.now()
         yesterday = today - timedelta(days=1)
         tomorrow = today + timedelta(days=1)
-        last_week = today - timedelta(weeks=1)  # Or timedelta(days=7)
-        next_week = today + timedelta(weeks=1)  # Or timedelta(days=7)
+        last_week = today - timedelta(weeks=1)
+        next_week = today + timedelta(weeks=1)
         fortnight_ago = today - timedelta(days=14)
         fortnight_later = today + timedelta(days=14)
+        question_lower = question.lower()
 
-        if 'today' in date_str:
-            print(today)
-            return str(today)
-        elif 'yesterday' in date_str:
-            return str(yesterday)
-        elif 'tomorrow' in date_str:
-            return str(tomorrow)
-        elif 'last week' in date_str:
-            return str(last_week)
-        elif  'next week' in date_str:
-            return str(next_week)
-        elif 'fortnight ago' in date_str:
-            return str(fortnight_ago)
-        elif 'fortnight later' in date_str:
-            return str(fortnight_later)
-        else:
-            try :
-                dt = parser.parse(date_str, fuzzy=True)
-                date = dt.strftime("%Y-%m-%d")
-                return date
-            except (ValueError) :
-                return False
+        if "today" in question_lower:
+            return today.strftime("%Y-%m-%d")
+        if "yesterday" in question_lower:
+            return yesterday.strftime("%Y-%m-%d")
+        if "tomorrow" in question_lower:
+            return tomorrow.strftime("%Y-%m-%d")
+        if "last week" in question_lower:
+            return last_week.strftime("%Y-%m-%d")
+        if "next week" in question_lower:
+            return next_week.strftime("%Y-%m-%d")
+        if "fortnight ago" in question_lower:
+            return fortnight_ago.strftime("%Y-%m-%d")
+        if "fortnight later" in question_lower:
+            return fortnight_later.strftime("%Y-%m-%d")
+        try:
+            dt = parser.parse(question, fuzzy=True)
+            return dt.strftime("%Y-%m-%d")
+        except ValueError:
+            return None
 
     @classmethod
     def dprint(cls, string):

@@ -1,6 +1,8 @@
 import json
 import os
 import time
+from pathlib import Path
+
 from openpyxl import load_workbook
 
 
@@ -37,27 +39,17 @@ class Analyst:
 
     @staticmethod
     def _log_metrics(meta_data):
-        file = f"data/metadata.jsonl"
-        if os.path.exists(file):
-            with open(file, "r") as f:
-                try:
-                    data = json.load(f)
-                except json.JSONDecodeError:
-                    data = []
-        else:
-            data = []
-        if not isinstance(data, list):
-            data = [data]
-        data.append(meta_data)
-        with open(file, "w") as f:
-            json.dump(data, f, indent=2)
+        file = Path("data/metadata.jsonl")
+        file.parent.mkdir(parents=True, exist_ok=True)
+        with open(file, "a", encoding="utf-8") as f:
+            f.write(json.dumps(meta_data) + "\n")
 
     def save_fallback_metadata(self, response, question):
-        meta_data = dict()
-        meta_data['timestamp'] = time.time()
-        meta_data['response'] = response
-        meta_data['question'] = question
-        self._log_metrics(meta_data)
+        meta_data = {
+            "timestamp": time.time(),
+            "response": response,
+            "question": question,
+        }
         self._log_metrics(meta_data)
 
     @staticmethod
