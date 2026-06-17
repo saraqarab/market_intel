@@ -6,3 +6,5 @@ python-dotenv
 python-dateutil
 requests
 beautifulsoup4
+elasticsearch
+ecs-logging
