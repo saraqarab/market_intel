@@ -1,0 +1,8 @@
+pandas
+yfinance
+fastapi
+ollama
+python-dotenv
+python-dateutil
+requests
+beautifulsoup4
