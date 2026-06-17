@@ -3,3 +3,5 @@ data/
 .idea/
 .venv
 *.iml
+__pycache__/
+*.pyc
